@@ -45,6 +45,7 @@ namespace DataBaseTest.Steps
         public void ThenCountOfRecordsShouldBeMoreThe(int expectedCount)
         {
             Assert.LessOrEqual(expectedCount, recordsCount);
-        }
+        } 
+        
     }
 }
