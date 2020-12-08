@@ -65,6 +65,5 @@ namespace DataBaseTest.Steps
         {
              Assert.AreEqual(expectedResult, duplicates.Count(), $"Are not equal! Count of duplicates {duplicates.Count()}");
         }
-        //
     }
 }
