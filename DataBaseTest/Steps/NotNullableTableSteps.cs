@@ -44,7 +44,7 @@ namespace DataBaseTest.Steps
         [Then(@"Count of records should be more the '(.*)'")]
         public void ThenCountOfRecordsShouldBeMoreThe(int expectedCount)
         {
-            Assert.LessOrEqual(expectedCount, recordsCount);
+            Assert.LessOrEqual(expectedCount, recordsCount, $"Expected count of records in table should be {expectedCount}, but actual count was {recordsCount}");
         } 
     }
 }

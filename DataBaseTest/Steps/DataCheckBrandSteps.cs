@@ -1,5 +1,6 @@
 ﻿using DataBaseTest.Models;
 using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -10,7 +11,7 @@ namespace DataBaseTest.Steps
     {
         private Brand expectedBrand;
 
-        private Brand record;
+        private Brand actualBrand;
 
         [Given(@"The infromation of brand with following data")]
         public void GivenTheInfromationOfBrandWithFollowingData(Table table)
@@ -25,16 +26,24 @@ namespace DataBaseTest.Steps
             };
         }
         
-        [When(@"I do an a query to get record from table production\.brands with id '(.*)'")]
-        public void WhenIDoAnAQueryToGetRecordFromTableProduction_BrandsWithId(int id)
+        [When(@"I do an query to get record from table production\.brands with id '(.*)'")]
+        public void WhenIDoAnQueryToGetRecordFromTableProduction_BrandsWithId(int id)
         {
-            record = StaticContext.context.Brands.Find(id);
+            actualBrand = StaticContext.context.Brands.Find(id);
         }
         
         [Then(@"Records from production\.brands should include the same information like in testing data")]
         public void ThenRecordsFromProduction_BrandsShouldIncludeTheSameInformationLikeInTestingData()
         {
-            expectedBrand.Should().BeEquivalentTo(record);
+            try
+            {
+                expectedBrand.Should().BeEquivalentTo(actualBrand);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Expected data from table production.brand should be:" + "\n" + $"BranddId: {expectedBrand.BrandId}; BrandName: {expectedBrand.BrandName}" + "\n" 
+                    + "But actual data was:" + "\n" + $"BrandId: {actualBrand.BrandId}; BrandName: {actualBrand.BrandName}");
+            }
         }
     }
 }

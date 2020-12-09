@@ -122,7 +122,7 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("Test information of store with following data", ((string)(null)), table1, "Given ");
 #line hidden
 #line 8
-testRunner.When("I do a query to get record from the table \"sales.store\" wiht id \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("I do an query to get record from the table sales.store with id \'1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 9
 testRunner.Then("Records from sales.store should include the same information like in testing data" +
@@ -228,7 +228,7 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("The infromation of brand with following data", ((string)(null)), table3, "Given ");
 #line hidden
 #line 22
-testRunner.When("I do an a query to get record from table production.brands with id \'3\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("I do an query to get record from table production.brands with id \'3\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 23
 testRunner.Then("Records from production.brands should include the same information like in testin" +
@@ -275,7 +275,7 @@ this.ScenarioInitialize(scenarioInfo);
 testRunner.Given("The infromation of category with following data", ((string)(null)), table4, "Given ");
 #line hidden
 #line 29
-testRunner.When("I do an a query to get record from table production.categories with id \'7\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("I do an query to get record from table production.categories with id \'7\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 30
 testRunner.Then("Records from production.categories should include the same information like in te" +

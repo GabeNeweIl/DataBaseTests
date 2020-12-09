@@ -1,5 +1,6 @@
 ﻿using DataBaseTest.Models;
 using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -10,7 +11,7 @@ namespace DataBaseTest.Steps
     {
         private Store expectedStore;
 
-        private Store record;
+        private Store actualStore;
 
         [Given(@"Test information of store with following data")]
         public void GivenTestInformationOfStoreWithFollowingData(Table table)
@@ -37,16 +38,29 @@ namespace DataBaseTest.Steps
             };
         }
         
-        [When(@"I do a query to get record from the table ""(.*)"" wiht id '(.*)'")]
-        public void WhenIDoAQueryToGetRecordFromTheTable(string p0, int id)
+        [When(@"I do an query to get record from the table sales\.store with id '(.*)'")]
+        public void WhenIDoAnQueryToGetRecordFromTheTableSale_StoreWithId(int id)
         {
-            record = StaticContext.context.Stores.Find(id);
+            actualStore = StaticContext.context.Stores.Find(id);
         }
 
         [Then(@"Records from sales\.store should include the same information like in testing data")]
         public void ThenRecordsFromSales_StoreShouldIncludeTheSameInformationLikeInTestingData()
         {
-            expectedStore.Should().BeEquivalentTo(record);
+            try
+            {
+                expectedStore.Should().BeEquivalentTo(actualStore);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Expected data from table sales.store should be:" + "\n" + $"StaffId: {expectedStore.StoreId}; " +
+                    $"Email: {expectedStore.Email}; Phone: {expectedStore.Phone}; Street: {expectedStore.Street}; City: {expectedStore.City}; " +
+                    $"State: {expectedStore.State}; ZipCode: {expectedStore.ZipCode}" + "\n"
+                    + "But actual data was:" + "\n" + $"StaffId: {actualStore.StoreId}; " +
+                    $"Email: {actualStore.Email}; Phone: {actualStore.Phone}; Street: {actualStore.Street}; City: {actualStore.City}; " +
+                    $"State: {actualStore.State}; ZipCode: {actualStore.ZipCode}");
+            }
+
         }
     }
 }

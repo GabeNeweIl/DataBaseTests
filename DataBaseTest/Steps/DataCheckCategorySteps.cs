@@ -1,5 +1,6 @@
 ﻿using DataBaseTest.Models;
 using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -10,7 +11,7 @@ namespace DataBaseTest.Steps
     {
         private Category expectedCategory;
 
-        private Category record;
+        private Category actualCategory;
 
         [Given(@"The infromation of category with following data")]
         public void GivenTheInfromationOfCategoryWithFollowingData(Table table)
@@ -25,16 +26,24 @@ namespace DataBaseTest.Steps
             };
         }
         
-        [When(@"I do an a query to get record from table production\.categories with id '(.*)'")]
-        public void WhenIDoAnAQueryToGetRecordFromTableProduction_CategoriesWithId(int id)
+        [When(@"I do an query to get record from table production\.categories with id '(.*)'")]
+        public void WhenIDoAnQueryToGetRecordFromTableProduction_CategoriesWithId(int id)
         {
-            record = StaticContext.context.Categories.Find(id);
+            actualCategory = StaticContext.context.Categories.Find(id);
         }
         
         [Then(@"Records from production\.categories should include the same information like in testing data")]
         public void ThenRecordsFromProduction_CategoriesShouldIncludeTheSameInformationLikeInTestingData()
         {
-            expectedCategory.Should().BeEquivalentTo(record);
+            try
+            {
+                expectedCategory.Should().BeEquivalentTo(actualCategory);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Expected data from table production.brands should be:" + "\n" + $"CategoryId: {expectedCategory.CategoryId}; CategoryName: {expectedCategory.CategoryName}" + "\n"
+                    + "But actual data was:" + "\n" + $"CategorydId: {actualCategory.CategoryId}; CategoryName: {actualCategory.CategoryName}");
+            }
         }
     }
 }

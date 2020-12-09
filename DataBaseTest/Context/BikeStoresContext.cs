@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DataBaseTest.Models;
+using System.Configuration;
+using System.Reflection;
 
 namespace DataBaseTest.Context
 {
@@ -7,6 +9,7 @@ namespace DataBaseTest.Context
     {
         public BikeStoresContext()
         {
+            
         }
 
         public BikeStoresContext(DbContextOptions<BikeStoresContext> options)
@@ -28,7 +31,8 @@ namespace DataBaseTest.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BikeStores;Trusted_Connection=True;");
+                var connectionString = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location).AppSettings.Settings;
+                optionsBuilder.UseSqlServer(connectionString["ConnectionString"].Value);
             }
         }
 

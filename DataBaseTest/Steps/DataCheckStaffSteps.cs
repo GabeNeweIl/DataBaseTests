@@ -1,5 +1,6 @@
 ﻿using DataBaseTest.Models;
 using FluentAssertions;
+using System;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -10,7 +11,7 @@ namespace DataBaseTest.Steps
     {
         private Staff expectedStaff;
 
-        private Staff record;
+        private Staff actualStaff;
 
         [Given(@"Test information of staff with following data")]
         public void GivenTestInformationOfStaffWithFollowingData(Table table)
@@ -40,13 +41,25 @@ namespace DataBaseTest.Steps
         [When(@"I do an query to get record from table sales\.staff with id '(.*)'")]
         public void WhenIDoAnQueryToGetRecordFromTableSales_StaffWithId(int id)
         {
-            record = StaticContext.context.Staffs.Find(id);
+            actualStaff = StaticContext.context.Staffs.Find(id);
         }
 
         [Then(@"Records from sales\.staff should include the same information like in testing data")]
         public void ThenRecordsFromSales_StaffShouldIncludeTheSameInformationLikeInTestingData()
         {
-            expectedStaff.Should().BeEquivalentTo(record);
+            try
+            {
+                expectedStaff.Should().BeEquivalentTo(actualStaff);
+            }
+            catch (Exception)
+            {
+                throw new Exception($"Expected data from table sales.staff should be:" + "\n" + $"StaffId: {expectedStaff.StaffId}; FirstName: {expectedStaff.FirstName}; " +
+                    $"LastName: {expectedStaff.LastName}; Email: {expectedStaff.Email}; Phone: {expectedStaff.Phone}; Active: {expectedStaff.Active}; " +
+                    $"StoreId: {expectedStaff.StoreId}; ManagerId: {expectedStaff.ManagerId}" + "\n"
+                    + "But actual data was:" + "\n" + $"StaffId: {actualStaff.StaffId}; FirstName: {actualStaff.FirstName}; " +
+                    $"LastName: {actualStaff.LastName}; Email: {actualStaff.Email}; Phone: {actualStaff.Phone}; Active: {actualStaff.Active}; " +
+                    $"StoreId: {actualStaff.StoreId}; ManagerId: {actualStaff.ManagerId}");
+            }
         }
 
     }
